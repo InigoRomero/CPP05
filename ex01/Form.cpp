@@ -78,5 +78,5 @@ const char* Form::GradeTooLowException::what() const throw()
 
 const char* Form::FormAlreadySignedException::what() const throw()
 {
-	return "FormException: The Form is already signed";
+	return "Exception: The Form is already signed";
 }

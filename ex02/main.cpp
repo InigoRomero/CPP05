@@ -1,87 +1,84 @@
-# include "Bureaucrat.hpp"
-# include "Form.hpp"
+#include <iostream>
+#include "Bureaucrat.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
-int main()
+int main(void)
 {
-	//Form to high
+	srand(time(NULL));
+	Bureaucrat ricardo = Bureaucrat("ricardo", 42);
+	Bureaucrat noEjecutador = Bureaucrat("DonNadie", 150);
+	ShrubberyCreationForm tree = ShrubberyCreationForm("loco");
+	ShrubberyCreationForm dos = ShrubberyCreationForm("dos");
+	RobotomyRequestForm robot = RobotomyRequestForm("loco");
+	PresidentialPardonForm presidential = PresidentialPardonForm("loco");
+	ricardo.signForm(tree);
+	ricardo.signForm(robot);
+	ricardo.signForm(dos);
+	
+	//creamos archivo de arboles desde el objeto form
 	try
 	{
-		Form form("Plebe", 150, 0);
-		std::cout << "[+] " << form << std::endl;
+		dos.execute(ricardo);
 	}
 	catch(std::exception const &e)
 	{
 		std::cerr << "[+] " << e.what() << std::endl;
 	}
-	//Form to low
+	//creamos archivo de arboles
 	try
 	{
-		Form form("Apple", 151, 1);
-		std::cout << "[+] " << form << std::endl;
+		ricardo.executeForm(tree);
 	}
 	catch(std::exception const &e)
 	{
 		std::cerr << "[+] " << e.what() << std::endl;
 	}
-	//correct Form with function beSigned
-	Form form("Permisos", 42, 42);
-	std::cout << "[+] " << form << std::endl;
-	Bureaucrat ricardo("Ricardo", 42);
-	Bureaucrat pepe("Pepe", 43);
-
-	//Grade to low
+	//ejecutamos el robot
 	try
 	{
-		form.beSigned(pepe);
-		std::cout << "[+] " << form << std::endl;
-	}
-	catch(std::exception const &e)
-	{
-		std::cerr << "[+] " << e.what() << std::endl;
-	}
-
-	//good grade to sing
-	try
-	{
-		form.beSigned(ricardo);
-		std::cout << "[+] " << form << std::endl;
-	}
-	catch(std::exception const &e)
-	{
-		std::cerr << "[+] " << e.what() << std::endl;
-	}
-	//correct Form with function singForm
-	Form form2("Permisos", 1, 1);
-	std::cout << "[+] " << form2 << std::endl;
-	Bureaucrat ricardo2("RicardoGod", 1);
-	Bureaucrat pepe2("Pepe", 43);
-
-	//Grade to low
-	try
-	{
-		pepe2.signForm(form2);
-		std::cout << "[+] " << form2 << std::endl;
+		ricardo.executeForm(robot);
 	}
 	catch(std::exception const &e)
 	{
 		std::cerr << "[+] " << e.what() << std::endl;
 	}
 
-	//good grade to sing
+	//ejecutamos el robot
 	try
 	{
-		ricardo2.signForm(form2);
-		std::cout << "[+] " << form2 << std::endl;
+		ricardo.executeForm(robot);
 	}
 	catch(std::exception const &e)
 	{
 		std::cerr << "[+] " << e.what() << std::endl;
 	}
-	//try to firm alredy firmed form
+	//ejecutamos presidential FALLO to low
 	try
 	{
-		ricardo2.signForm(form2);
-		std::cout << "[+] " << form2 << std::endl;
+		ricardo.executeForm(presidential);
+	}
+	catch(std::exception const &e)
+	{
+		std::cerr << "[+] " << e.what() << std::endl;
+	}
+
+	//ejecutar presidente sin firmar
+	Bureaucrat president = Bureaucrat("ErPresi", 1);
+	try
+	{
+		president.executeForm(presidential);
+	}
+	catch(std::exception const &e)
+	{
+		std::cerr << "[+] " << e.what() << std::endl;
+	}
+	president.signForm(presidential);
+	//ejecutar presidente Bien
+	try
+	{
+		president.executeForm(presidential);
 	}
 	catch(std::exception const &e)
 	{
